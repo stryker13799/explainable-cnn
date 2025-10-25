@@ -1,6 +1,6 @@
 # Explainable CNN: A Pure NumPy Implementation
 
-A CNN implementation from scratch using only NumPy. No PyTorch, TensorFlow, or JAX—just gradient descent and matrix operations.
+A CNN implementation from scratch using only NumPy. No PyTorch/TensorFlow/JAX, just gradient descent and matrix operations.
 
 
 ## Architecture
