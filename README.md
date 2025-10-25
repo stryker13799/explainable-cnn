@@ -55,4 +55,4 @@ explainable-cnn/
 ├── requirements.txt    # Dependency specifications
 ├── model_weights.npz   # Serialized trained parameters (auto-generated)
 └── data/              # MNIST dataset cache (auto-downloaded)
-``
+```
