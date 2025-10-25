@@ -21,18 +21,10 @@ def download_file(url, filepath):
 def download_mnist(data_dir='data'):
     os.makedirs(data_dir, exist_ok=True)
     files = {
-        "train-images-idx3-ubyte.gz": [
-            "https://github.com/fgnt/mnist/raw/master/train-images-idx3-ubyte.gz",
-        ],
-        "train-labels-idx1-ubyte.gz": [
-            "https://github.com/fgnt/mnist/raw/master/train-labels-idx1-ubyte.gz",
-        ],
-        "t10k-images-idx3-ubyte.gz": [
-            "https://github.com/fgnt/mnist/raw/master/t10k-images-idx3-ubyte.gz",
-        ],
-        "t10k-labels-idx1-ubyte.gz": [
-            "https://github.com/fgnt/mnist/raw/master/t10k-labels-idx1-ubyte.gz"
-        ]
+        "train-images-idx3-ubyte.gz": "https://github.com/fgnt/mnist/raw/master/train-images-idx3-ubyte.gz",
+        "train-labels-idx1-ubyte.gz": "https://github.com/fgnt/mnist/raw/master/train-labels-idx1-ubyte.gz",
+        "t10k-images-idx3-ubyte.gz": "https://github.com/fgnt/mnist/raw/master/t10k-images-idx3-ubyte.gz",
+        "t10k-labels-idx1-ubyte.gz": "https://github.com/fgnt/mnist/raw/master/t10k-labels-idx1-ubyte.gz"
     }
     
     for filename, url in files.items():
