@@ -2,6 +2,8 @@
 
 A CNN implementation from scratch using only NumPy. No PyTorch/TensorFlow/JAX, just gradient descent and matrix operations.
 
+**Live Demo:** https://explainable-cnn-scratch.streamlit.app/
+
 
 ## Architecture
 
