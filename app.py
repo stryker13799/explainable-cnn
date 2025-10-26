@@ -28,7 +28,15 @@ st.markdown("""
 @st.cache_data
 def load_data():
     X_train_full, y_train_full, X_test, y_test = load_mnist_data()
-    return X_train_full[:2000], y_train_full[:2000], X_test[:1000], y_test[:1000]
+    rng = np.random.default_rng(2025)
+    train_indices = rng.permutation(len(X_train_full))[:2000]
+    test_indices = rng.permutation(len(X_test))[:1000]
+    return (
+        X_train_full[train_indices],
+        y_train_full[train_indices],
+        X_test[test_indices],
+        y_test[test_indices]
+    )
 
 
 @st.cache_resource
@@ -417,22 +425,34 @@ if page == "Live Training":
     with col3:
         lr = st.slider("learning rate", min_value=0.001, max_value=0.1, value=0.02, step=0.001, format="%.3f")
     
+    train_button = False
+    train_mode = None
     if not st.session_state.trained:
-        train_button = st.button("Initialize Training", type="primary", use_container_width=True)
+        if st.button("Initialize Training", type="primary", use_container_width=True):
+            train_button = True
+            train_mode = "initial"
     else:
         st.success("**Training Complete.** Model parameters converged. Proceed to Inference Explorer for evaluation.")
-        col1, col2 = st.columns(2)
-        with col1:
-            train_button = st.button("Reinitialize Training", type="secondary", use_container_width=True)
-        with col2:
+        btn_col1, btn_col2 = st.columns(2)
+        with btn_col1:
+            if st.button("Reinitialize Training", type="secondary", use_container_width=True):
+                train_button = True
+                train_mode = "reinit"
+        with btn_col2:
             if st.button("Proceed to Inference Explorer", type="primary", use_container_width=True):
                 st.session_state.current_page = "Inference Explorer"
                 st.rerun()
-    
+
     if train_button:
-        if st.session_state.model is None:
+        if train_mode == "reinit":
+            st.session_state.model = Sequential(input_channels=1)
+        elif st.session_state.model is None:
             st.session_state.model = initialize_model()
         st.session_state.trained = False
+        st.session_state.train_losses = []
+        st.session_state.train_accs = []
+        st.session_state.final_test_acc = None
+        st.session_state.metrics = None
         
         status_container = st.container()
         with status_container:

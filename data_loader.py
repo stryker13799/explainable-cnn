@@ -46,7 +46,7 @@ def parse_labels(filepath):
     return labels
 
 
-def load_mnist_data(data_dir='data'):
+def load_mnist_data(data_dir='data', dtype=np.float32):
     download_mnist(data_dir)
     
     paths = {
@@ -62,9 +62,9 @@ def load_mnist_data(data_dir='data'):
     test_labels = parse_labels(os.path.join(data_dir, paths['test_lbl']))
     
     # normalize to [0,1] and reshape to (batch, channels, height, width)
-    X_train = (train_images.astype(np.float32) / 255.0).reshape(-1, 1, 28, 28)
-    X_test = (test_images.astype(np.float32) / 255.0).reshape(-1, 1, 28, 28)
-    y_train = train_labels.astype(np.int64)
-    y_test = test_labels.astype(np.int64)
+    X_train = np.ascontiguousarray((train_images.astype(dtype) / 255.0).reshape(-1, 1, 28, 28))
+    X_test = np.ascontiguousarray((test_images.astype(dtype) / 255.0).reshape(-1, 1, 28, 28))
+    y_train = np.ascontiguousarray(train_labels.astype(np.int64))
+    y_test = np.ascontiguousarray(test_labels.astype(np.int64))
     
     return X_train, y_train, X_test, y_test
